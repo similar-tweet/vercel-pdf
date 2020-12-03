@@ -10,7 +10,7 @@ const renderPdf = async (name) => {
   await page.goto(`https://twitter.com`)
   const html = await page.$('html')
 
-  return html
+  return html.toString();
 }
 
 export default async function handler (req, res) {

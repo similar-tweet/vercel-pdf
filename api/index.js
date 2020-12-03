@@ -1,13 +1,13 @@
 const playwright = require('playwright-aws-lambda')
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36'
-const renderPdf = async (name) => {
+const renderPdf = async (name, url) => {
   var browser = null
 
   browser = await playwright.launchChromium()
   const context = await browser.newContext({
     userAgent: UA })
   const page = await context.newPage()
-  await page.goto(`https://twitter.com`)
+  await page.goto(url || `https://twitter.com`)
   const html = await page.$eval('html', e => e.outerHTML);
 
   return html;
@@ -15,13 +15,13 @@ const renderPdf = async (name) => {
 
 export default async function handler (req, res) {
   try {
-    const { id } = req.query
+    const { id, url } = req.query
 
     if (id === undefined) {
       throw new Error('ID parameter is missing')
     }
 
-    const file = await renderPdf(id)
+    const file = await renderPdf(id, url)
     res.statusCode = 200
     res.setHeader('Content-Type', 'text/html')
     res.setHeader('Cache-Control', 'no-cache')

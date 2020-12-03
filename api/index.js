@@ -3,7 +3,7 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 const renderPdf = async (name, url) => {
   var browser = null
 
-  browser = await playwright.launchChromium()
+  browser = await playwright.launchChromium({headless: true)
   const context = await browser.newContext({
     userAgent: UA })
   const page = await context.newPage()

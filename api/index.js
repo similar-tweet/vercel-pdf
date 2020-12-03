@@ -8,34 +8,22 @@ const renderPdf = async (name) => {
   const page = await context.newPage()
 
   await page.goto(`https://twitter.com`)
-  await page.emulateMedia('screen')
-  const pdf = await page.pdf({
-    format: 'A4',
-    printBackground: true,
-    margin: {
-      top: '120px',
-      bottom: '50px',
-      right: '0px',
-      left: '0px'
-    }
-  })
+  const html = await page.$('html')
 
-  return pdf
+  return html
 }
 
 export default async function handler (req, res) {
   try {
-    const { name } = req.query
+    const { id } = req.query
 
-    if (name === undefined) {
-      throw new Error('Name parapamter is missing')
+    if (id === undefined) {
+      throw new Error('ID parameter is missing')
     }
 
-    const file = await renderPdf(name)
+    const file = await renderPdf(id)
     res.statusCode = 200
-
-    res.setHeader('Content-disposition', 'inline; filename=123.pdf')
-    res.setHeader('Content-Type', 'application/pdf')
+    res.setHeader('Content-Type', 'application/text')
     res.setHeader('Cache-Control', 'no-cache')
     res.end(file)
   } catch (e) {

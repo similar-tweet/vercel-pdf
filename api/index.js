@@ -23,7 +23,7 @@ export default async function handler (req, res) {
 
     const file = await renderPdf(id)
     res.statusCode = 200
-    res.setHeader('Content-Type', 'application/text')
+    res.setHeader('Content-Type', 'text/html')
     res.setHeader('Cache-Control', 'no-cache')
     res.end(file)
   } catch (e) {

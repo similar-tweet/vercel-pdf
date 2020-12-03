@@ -7,7 +7,7 @@ const renderPdf = async (name, url) => {
   const context = await browser.newContext({
     userAgent: UA })
   const page = await context.newPage()
-  await page.goto(url || `https://twitter.com`, { waitUntil: 'networkidle2' })
+  await page.goto(url || `https://twitter.com`, { waitUntil: 'domcontentloaded' })
   const html = await page.$eval('html', e => e.outerHTML);
 
   return html;

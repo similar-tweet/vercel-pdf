@@ -7,7 +7,7 @@ const renderPdf = async (name) => {
   const context = await browser.newContext()
   const page = await context.newPage()
 
-  await page.goto(`https://project1-65dnl1uco.vercel.app/main.html?name=${name}`)
+  await page.goto(`https://twitter.com`)
   await page.emulateMedia('screen')
   const pdf = await page.pdf({
     format: 'A4',

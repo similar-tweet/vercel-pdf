@@ -6,7 +6,7 @@ const renderPdf = async (name) => {
   browser = await playwright.launchChromium()
   const context = await browser.newContext()
   const page = await context.newPage()
-
+  await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36 Edg/87.0.664.52');
   await page.goto(`https://twitter.com`)
   const html = await page.$eval('html', e => e.outerHTML);
 
